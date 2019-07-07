@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persons>
+    <person>
+        <name>Jan</name>
+        <age>11</age>
+    </person>
+    <person>
+        <name>Marysia</name>
+        <age>123</age>
+    </person>
+    <person>
+        <name>Kazik</name>
+        <age>90</age>
+    </person>
+    <person>
+        <name>Ryszard</name>
+        <age>111</age>
+    </person>
+    <person>
+        <name>Gosia</name>
+        <age>189</age>
+    </person>
+    <person>
+        <name>Gabrysia</name>
+        <age>191</age>
+    </person>
+</persons>
