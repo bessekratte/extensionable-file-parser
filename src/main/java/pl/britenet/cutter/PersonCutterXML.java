@@ -1,12 +1,15 @@
 package pl.britenet.cutter;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Optional;
 
+@Component
 public class PersonCutterXML implements BufferCutter {
 
-    private static final String STARTER = "<persons>";
-    private static final String FINISHER = "</persons>";
-    private static final String CUTTER = "</person>";
+    private static final String STARTER = "<customer>";
+    private static final String FINISHER = "</customers>";
+    private static final String CUTTER = "</customer>";
 
     @Override
     public String getCompleteBuffer(String buffer) {

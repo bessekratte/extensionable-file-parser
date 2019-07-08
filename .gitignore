@@ -1,2 +1,6 @@
 .idea
 *.iml
+test
+target
+notes
+*.sqlite

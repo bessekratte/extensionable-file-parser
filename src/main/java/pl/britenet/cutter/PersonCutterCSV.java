@@ -1,10 +1,12 @@
 package pl.britenet.cutter;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Optional;
 
+@Component
 public class PersonCutterCSV implements BufferCutter {
 
-//    private static final String STARTER = "";
     private static final String FINISHER = "\u0000";
     private static final String CUTTER = "\n";
 

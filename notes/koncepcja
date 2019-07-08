@@ -5,16 +5,16 @@ Moduł odpowiedzialny za przetwarzanie kolejnych porcji danych
 
 Jak ma to robić ?
 Pobiera bufor i przetwarza z niego część całkowitą oraz część niepełną.
-Część całkowita może wymagać domknięcia typu </persons> itp
+Część całkowita może wymagać domknięcia typu </customers> itp
 Część całkowita może iść dalej do mapowania na obiekty Javowe
-Część niepełna może wymagać pewnego rozpoczęćia typu <persons>
+Część niepełna może wymagać pewnego rozpoczęćia typu <customers>
 i czekać na kolejny bufor.
     Kolejny bufor przychodzi, konkatenuje się go z częścią pełną która ma takie same
     wymagania jak ta poprzednia, a część niepełną zostawia się na kolejną porcję danych
 
 Jak ma to robić vol. 2 ?
-Z buforu wyodrębniane sa tylko <person>...</person>
-we właściwym kodzie dodawane są tutaj znaczniki <persons> + "..." + </persons>
+Z buforu wyodrębniane sa tylko <customer>...</customer>
+we właściwym kodzie dodawane są tutaj znaczniki <customers> + "..." + </customers>
 są to startery i finishery,
 
 przykład:

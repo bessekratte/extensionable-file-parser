@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<persons>
-    <person>
+<customers>
+    <customer>
         <name>Jan</name>
         <age>11</age>
-    </person>
-    <person>
+    </customer>
+    <customer>
         <name>Marysia</name>
         <age>123</age>
-    </person>
-    <person>
+    </customer>
+    <customer>
         <name>Kazik</name>
         <age>90</age>
-    </person>
-    <person>
+    </customer>
+    <customer>
         <name>Ryszard</name>
         <age>111</age>
-    </person>
-    <person>
+    </customer>
+    <customer>
         <name>Gosia</name>
         <age>189</age>
-    </person>
-    <person>
+    </customer>
+    <customer>
         <name>Gabrysia</name>
         <age>191</age>
-    </person>
-</persons>
+    </customer>
+</customers>
