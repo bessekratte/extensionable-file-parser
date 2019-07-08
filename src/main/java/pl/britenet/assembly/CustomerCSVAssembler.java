@@ -25,7 +25,7 @@ public class CustomerCSVAssembler extends Assembler {
 
     @Autowired
     public CustomerCSVAssembler(CSVParseable parseable, DBWriteable dbWriteable) {
-        super(".csv", dbWriteable);
+        super(dbWriteable);
         this.parseable = parseable;
     }
 

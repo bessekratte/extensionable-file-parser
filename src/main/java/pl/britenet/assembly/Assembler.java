@@ -11,23 +11,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Optional;
 
 public abstract class Assembler {
 
-    protected final String extension;
-    protected final FixedBufferReader reader = new FixedBufferReader();
-    protected DBWriteable dbWriteable;
-    protected boolean EOF = false;
-    protected int skippedBuffer = 0;
+    final FixedBufferReader reader = new FixedBufferReader();
+    DBWriteable dbWriteable;
+    boolean EOF = false;
+    int skippedBuffer = 0;
 
-    public Assembler(String extension, DBWriteable dbWriteable) {
-        this.extension = extension;
+    public Assembler(DBWriteable dbWriteable) {
         this.dbWriteable = dbWriteable;
     }
 
     public abstract void parseFile(Path path, int buffer) throws IOException;
-
     public abstract String getExtension();
 
     void createTables() {

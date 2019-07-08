@@ -28,7 +28,7 @@ public class Application {
 
     private static Path filePath;
     private static int bufferSize;
-    private static String format;
+    private static String extension;
 
     @Autowired
     private List<Assembler> assemblers;
@@ -43,13 +43,13 @@ public class Application {
                 Integer.parseInt(args[1]) :
                 Integer.parseInt(PropertyResolver.getProperty("default.buffer"));
 
-        format = args[0].substring(args[0].lastIndexOf("."));
+        extension = args[0].substring(args[0].lastIndexOf("."));
         SpringApplication.run(Application.class, args);
     }
 
     private void parseFile() throws IOException {
         Assembler assembler = assemblers.stream()
-                .filter(x -> x.getExtension().equals(format))
+                .filter(x -> x.getExtension().equals(extension))
                 .findAny()
                 .orElseThrow(FormatNotSupportedExcepion::new);
         assembler.parseFile(filePath, bufferSize);

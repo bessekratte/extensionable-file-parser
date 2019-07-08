@@ -25,7 +25,7 @@ public class CustomerXMLAssembler extends Assembler {
 
     @Autowired
     public CustomerXMLAssembler(XMLParseable parseable, DBWriteable dbWriteable) {
-        super(".xml", dbWriteable);
+        super(dbWriteable);
         this.parseable = parseable;
         this.dbWriteable = dbWriteable;
     }
