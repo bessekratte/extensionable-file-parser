@@ -7,6 +7,8 @@ import pl.britenet.cutter.BufferCutter;
 import pl.britenet.db.DBWriteable;
 import pl.britenet.entity.Contact;
 import pl.britenet.entity.Customer;
+import pl.britenet.files.FixedBufferReader;
+import pl.britenet.parsers.CSVParseable;
 import pl.britenet.parsers.XMLParseable;
 
 import java.io.IOException;
@@ -24,10 +26,9 @@ public class CustomerXMLAssembler extends Assembler {
     private XMLParseable parseable;
 
     @Autowired
-    public CustomerXMLAssembler(XMLParseable parseable, DBWriteable dbWriteable) {
-        super(dbWriteable);
+    public CustomerXMLAssembler(FixedBufferReader reader, DBWriteable dbWriteable, XMLParseable parseable) {
+        super(reader, dbWriteable);
         this.parseable = parseable;
-        this.dbWriteable = dbWriteable;
     }
 
     @Override
@@ -46,17 +47,19 @@ public class CustomerXMLAssembler extends Assembler {
             try {
                 Connection conn;
                 PreparedStatement st;
-                conn = DriverManager.getConnection(Application.DATABASE_URL, Application.DATABASE_USER, Application.DATABASE_PASSWORD);
+                conn = DriverManager.getConnection(Assembler.DATABASE_URL, Assembler.DATABASE_USER, Assembler.DATABASE_PASSWORD);
                 int customerIndex = 1;
                 int contactIndex = 1;
                 for (Customer customer : all) {
                     customer.setId(customerIndex++);
                     st = customer.getInsertSQL(conn);
                     st.execute();
-                    for (Contact contact : customer.getContacts()){
-                        contact.setId(contactIndex++);
-                        contact.setId_customer(customerIndex);
-                        st = contact.getInsertSQL(conn);
+                    for (String contact : customer.getContacts()){
+                        Contact c = new Contact();
+                        c.setContact(contact);
+                        c.setId(contactIndex++);
+                        c.setId_customer(customerIndex);
+                        st = c.getInsertSQL(conn);
                         st.execute();
                     }
                 }
@@ -64,7 +67,6 @@ public class CustomerXMLAssembler extends Assembler {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println(all);
             skippedBuffer += buffer;
             EOF = !stringOptional.isPresent();
         }

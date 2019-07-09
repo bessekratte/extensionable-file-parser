@@ -1,6 +1,5 @@
 package pl.britenet.entity;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import lombok.Data;
 import pl.britenet.db.DBInsertable;
 
@@ -13,8 +12,6 @@ public class Contact implements DBInsertable {
 
     private int id;
     private int type;
-
-    @JacksonXmlProperty(localName = "phone")
     private String contact;
     private int id_customer;
 

@@ -24,3 +24,4 @@ public class PersonCutterCSV implements BufferCutter {
         return Optional.of(buffer.substring(buffer.lastIndexOf(CUTTER) + CUTTER.length()));
     }
 }
+

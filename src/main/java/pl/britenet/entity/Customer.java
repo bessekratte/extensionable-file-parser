@@ -4,8 +4,6 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.britenet.cutter.BufferCutter;
-import pl.britenet.db.DBCreateable;
-import pl.britenet.db.DBInsertable;
 import pl.britenet.db.DBWriteable;
 import pl.britenet.entity.utils.CustomerUtils;
 import pl.britenet.mapper.csv.CsvToObjectMapper;
@@ -27,8 +25,7 @@ public class Customer implements XMLParseable, CSVParseable, DBWriteable {
     private String surname;
     private int age;
     private String city;
-    private List<Contact> contacts;
-
+    private List<String> contacts;
     @Autowired
     private CustomerUtils utils;
 

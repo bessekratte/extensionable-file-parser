@@ -16,7 +16,6 @@ public class PersonXmlMapper implements XmlToObjectMapper<Customer> {
     public List<Customer> mapToObjects(String values) {
 
         JacksonXmlModule module = new JacksonXmlModule();
-        module.setDefaultUseWrapper(false);
         XmlMapper xmlMapper = new XmlMapper(module);
         try {
             return Arrays.asList(xmlMapper.readValue(values, Customer[].class));

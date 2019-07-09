@@ -1,5 +1,7 @@
 package pl.britenet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,20 +18,11 @@ import java.util.List;
 @SpringBootApplication
 public class Application {
 
-    public static final String DATABASE_URL;
-    public static final String DATABASE_USER;
-    public static final String DATABASE_PASSWORD;
-
-    static {
-        DATABASE_URL = PropertyResolver.getProperty("database.url");
-        DATABASE_USER = PropertyResolver.getProperty("database.user");
-        DATABASE_PASSWORD = PropertyResolver.getProperty("database.password");
-    }
 
     private static Path filePath;
     private static int bufferSize;
     private static String extension;
-
+    private final static Logger logger = LoggerFactory.getLogger(Application.class);
     @Autowired
     private List<Assembler> assemblers;
 
@@ -56,7 +49,8 @@ public class Application {
     }
 
     @PostConstruct
-    public void start() throws IOException{
+    public void start() throws IOException {
+        logger.info("Selected buffer = " + bufferSize);
         parseFile();
     }
 }

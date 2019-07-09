@@ -13,7 +13,6 @@ import java.util.List;
 @Component
 public class PersonCsvMapper implements CsvToObjectMapper<Customer> {
 
-
     @Override
     public List<Customer> mapToObjects(String values) {
 
@@ -45,9 +44,7 @@ public class PersonCsvMapper implements CsvToObjectMapper<Customer> {
                             customer.setCity(s);
                             break;
                         default:
-                            Contact contact = new Contact();
-                            contact.setContact(s);
-                            customer.getContacts().add(contact);
+                            customer.getContacts().add(s);
                             break;
                     }
                     pointer++;
