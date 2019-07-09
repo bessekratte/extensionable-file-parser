@@ -2,13 +2,11 @@ package pl.britenet.assembly;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.britenet.Application;
 import pl.britenet.cutter.BufferCutter;
 import pl.britenet.db.DBWriteable;
 import pl.britenet.entity.Contact;
 import pl.britenet.entity.Customer;
 import pl.britenet.files.FixedBufferReader;
-import pl.britenet.parsers.CSVParseable;
 import pl.britenet.parsers.XMLParseable;
 
 import java.io.IOException;
@@ -41,7 +39,7 @@ public class CustomerXMLAssembler extends Assembler {
 
         while (!EOF) {
 
-            char[] readed = reader.readFixedBytes(path, buffer, skippedBuffer);
+            char[] readed = reader.readFixedBytes(path, buffer, readBuffer);
             String gotowy = cutter.getCompleteBuffer(stringOptional.get() + String.valueOf(readed));
             stringOptional = cutter.getPartialBuffer(String.valueOf(readed));
             List<Customer> customers = parseable.getXMLMapper().mapToObjects(gotowy);
@@ -66,7 +64,7 @@ public class CustomerXMLAssembler extends Assembler {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            skippedBuffer += buffer;
+            readBuffer += buffer;
             EOF = !stringOptional.isPresent();
         }
     }

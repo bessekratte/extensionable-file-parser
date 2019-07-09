@@ -2,7 +2,6 @@ package pl.britenet.assembly;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.britenet.Application;
 import pl.britenet.cutter.BufferCutter;
 import pl.britenet.db.DBWriteable;
 import pl.britenet.entity.Contact;
@@ -40,7 +39,7 @@ public class CustomerCSVAssembler extends Assembler {
         int contactIndex = 0;
 
         while (!EOF) {
-            char[] readed = reader.readFixedBytes(path, buffer, skippedBuffer);
+            char[] readed = reader.readFixedBytes(path, buffer, readBuffer);
             String complete = cutter.getCompleteBuffer(stringOptional.get() + String.valueOf(readed));
             stringOptional = cutter.getPartialBuffer(String.valueOf(readed));
             List<Customer> customers = parseable.getCSVMapper().mapToObjects(complete);
@@ -65,7 +64,7 @@ public class CustomerCSVAssembler extends Assembler {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            skippedBuffer += buffer;
+            readBuffer += buffer;
             EOF = !stringOptional.isPresent();
         }
     }

@@ -25,7 +25,7 @@ public abstract class Assembler {
     final FixedBufferReader reader;
     final DBWriteable dbWriteable;
     boolean EOF = false;
-    int skippedBuffer = 0;
+    int readBuffer = 0;
 
     static {
         DATABASE_URL = PropertyResolver.getProperty("database.url");

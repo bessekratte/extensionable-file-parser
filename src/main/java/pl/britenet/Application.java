@@ -36,7 +36,11 @@ public class Application {
                 Integer.parseInt(args[1]) :
                 Integer.parseInt(PropertyResolver.getProperty("default.buffer"));
 
-        extension = args[0].substring(args[0].lastIndexOf("."));
+        try {
+            extension = args[0].substring(args[0].lastIndexOf("."));
+        } catch (IndexOutOfBoundsException e){
+            throw new RuntimeException(e + "Your file: " + filePath + " have no extension");
+        }
         SpringApplication.run(Application.class, args);
     }
 
