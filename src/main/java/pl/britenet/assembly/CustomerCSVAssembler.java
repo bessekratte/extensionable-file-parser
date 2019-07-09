@@ -40,21 +40,19 @@ public class CustomerCSVAssembler extends Assembler {
         int contactIndex = 0;
 
         while (!EOF) {
-
             char[] readed = reader.readFixedBytes(path, buffer, skippedBuffer);
             String complete = cutter.getCompleteBuffer(stringOptional.get() + String.valueOf(readed));
             stringOptional = cutter.getPartialBuffer(String.valueOf(readed));
-            List<Customer> all = parseable.getCSVMapper().mapToObjects(complete);
-
+            List<Customer> customers = parseable.getCSVMapper().mapToObjects(complete);
             try {
                 Connection conn;
                 PreparedStatement st;
                 conn = DriverManager.getConnection(Assembler.DATABASE_URL, Assembler.DATABASE_USER, Assembler.DATABASE_PASSWORD);
-                for (Customer customer : all) {
+                for (Customer customer : customers) {
                     customer.setId(++customerIndex);
                     st = customer.getInsertSQL(conn);
                     st.execute();
-                    for (String contact : customer.getContacts()){
+                    for (String contact : customer.getContacts()) {
                         Contact c = new Contact();
                         c.setContact(contact);
                         c.setId(contactIndex++);

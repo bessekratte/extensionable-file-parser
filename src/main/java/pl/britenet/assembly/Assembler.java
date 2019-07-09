@@ -2,7 +2,6 @@ package pl.britenet.assembly;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import pl.britenet.Application;
 import pl.britenet.db.DBWriteable;
 import pl.britenet.files.FixedBufferReader;
 import pl.britenet.properties.PropertyResolver;
@@ -23,9 +22,8 @@ public abstract class Assembler {
     static final String DATABASE_USER;
     static final String DATABASE_PASSWORD;
 
-    @Autowired
-    FixedBufferReader reader;
-    DBWriteable dbWriteable;
+    final FixedBufferReader reader;
+    final DBWriteable dbWriteable;
     boolean EOF = false;
     int skippedBuffer = 0;
 
@@ -36,6 +34,7 @@ public abstract class Assembler {
     }
 
     public Assembler(FixedBufferReader reader, DBWriteable dbWriteable) {
+        this.reader = reader;
         this.dbWriteable = dbWriteable;
     }
 
@@ -56,5 +55,6 @@ public abstract class Assembler {
     }
 
     public abstract void parseFile(Path path, int buffer) throws IOException;
+
     public abstract String getExtension();
 }

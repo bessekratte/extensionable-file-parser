@@ -36,25 +36,24 @@ public class CustomerXMLAssembler extends Assembler {
         createTables();
         Optional<String> stringOptional = Optional.of("");
         BufferCutter cutter = parseable.getXMLCutter();
+        int customerIndex = 0;
+        int contactIndex = 0;
 
         while (!EOF) {
 
             char[] readed = reader.readFixedBytes(path, buffer, skippedBuffer);
             String gotowy = cutter.getCompleteBuffer(stringOptional.get() + String.valueOf(readed));
             stringOptional = cutter.getPartialBuffer(String.valueOf(readed));
-            List<Customer> all = parseable.getXMLMapper().mapToObjects(gotowy);
-
+            List<Customer> customers = parseable.getXMLMapper().mapToObjects(gotowy);
             try {
                 Connection conn;
                 PreparedStatement st;
                 conn = DriverManager.getConnection(Assembler.DATABASE_URL, Assembler.DATABASE_USER, Assembler.DATABASE_PASSWORD);
-                int customerIndex = 1;
-                int contactIndex = 1;
-                for (Customer customer : all) {
-                    customer.setId(customerIndex++);
+                for (Customer customer : customers) {
+                    customer.setId(++customerIndex);
                     st = customer.getInsertSQL(conn);
                     st.execute();
-                    for (String contact : customer.getContacts()){
+                    for (String contact : customer.getContacts()) {
                         Contact c = new Contact();
                         c.setContact(contact);
                         c.setId(contactIndex++);
