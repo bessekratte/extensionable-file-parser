@@ -2,7 +2,6 @@ package pl.britenet.entity;
 
 import lombok.Data;
 import lombok.Getter;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import pl.britenet.db.DBInsertable;
 
 import java.sql.Connection;
@@ -13,7 +12,7 @@ import java.sql.SQLException;
 public class Contact implements DBInsertable {
 
     private int id;
-    private int type;
+    private ContactType type;
     private String contact;
     private int id_customer;
 
@@ -22,7 +21,7 @@ public class Contact implements DBInsertable {
         PreparedStatement ps = connection.prepareStatement("INSERT INTO CONTACTS values(?, ?, ?, ?)");
         ps.setInt(1, this.id);
         ps.setInt(2, this.id_customer);
-        ps.setInt(3, this.type);
+        ps.setInt(3, this.type.getOrderNumber());
         ps.setString(4, this.contact);
         return ps;
     }
@@ -33,7 +32,7 @@ public class Contact implements DBInsertable {
     }
 
     public void setType() {
-        this.type = ContactType.resolveContactType(this.contact).getOrderNumber();
+        this.type = ContactType.resolveContactType(this.contact);
     }
 
     @Getter
