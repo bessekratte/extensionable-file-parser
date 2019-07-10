@@ -18,7 +18,6 @@ import java.util.List;
 @SpringBootApplication
 public class Application {
 
-
     private static Path filePath;
     private static int bufferSize;
     private static String extension;
@@ -30,17 +29,16 @@ public class Application {
 
         if (args.length < 1)
             throw new IOException("U need to define path to file in args");
+        try {
+            extension = args[0].substring(args[0].lastIndexOf("."));
+        } catch (IndexOutOfBoundsException e) {
+            throw new RuntimeException(e + "Your file: " + filePath + " have no extension");
+        }
         filePath = Paths.get(args[0]);
 
         bufferSize = args.length > 1 ?
                 Integer.parseInt(args[1]) :
                 Integer.parseInt(PropertyResolver.getProperty("default.buffer"));
-
-        try {
-            extension = args[0].substring(args[0].lastIndexOf("."));
-        } catch (IndexOutOfBoundsException e){
-            throw new RuntimeException(e + "Your file: " + filePath + " have no extension");
-        }
         SpringApplication.run(Application.class, args);
     }
 

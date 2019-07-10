@@ -1,6 +1,8 @@
 package pl.britenet.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import pl.britenet.db.DBInsertable;
 
 import java.sql.Connection;
@@ -24,4 +26,33 @@ public class Contact implements DBInsertable {
         ps.setString(4, this.contact);
         return ps;
     }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+        setType();
+    }
+
+    public void setType() {
+        this.type = ContactType.resolveContactType(this.contact).getOrderNumber();
+    }
+
+    @Getter
+    enum ContactType{
+        EMAIL(1),
+        PHONE(2),
+        JABBER(3),
+        UNKNOWN(0);
+
+        private int orderNumber;
+
+        ContactType(int orderNumber){
+            this.orderNumber = orderNumber;
+        }
+
+        private static ContactType resolveContactType(String contact){
+            return contact.contains("@") ? EMAIL : contact.matches(".*\\d.*") ? PHONE : JABBER;
+        }
+    }
+
+
 }
